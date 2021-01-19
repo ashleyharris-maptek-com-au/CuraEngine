@@ -10,7 +10,7 @@
 #include "Slice.h"
 #include "slicer.h"
 #include "settings/EnumSettings.h"
-#include "utils/PolygonUtils.h"
+#include "utils/polygonUtils.h"
 
 #include "utils/SparseCellGrid3D.h"
 
