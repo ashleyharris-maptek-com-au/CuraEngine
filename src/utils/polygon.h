@@ -723,6 +723,12 @@ public:
 
     bool operator==(const Polygons& other) const =delete;
 
+    void translate(Point translation)
+    {
+        for (PolygonRef poly : *this)
+            poly.translate(translation);
+    }
+
     /*!
      * Convert ClipperLib::PolyTree to a Polygons object,
      * which uses ClipperLib::Paths instead of ClipperLib::PolyTree
