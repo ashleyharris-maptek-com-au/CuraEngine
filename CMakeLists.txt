@@ -250,6 +250,7 @@ set(engine_TEST_UTILS
     SparseGridTest
     StringTest
     UnionFindTest
+    VoxelUtilsTest
 )
 
 # Helper classes for some tests.
