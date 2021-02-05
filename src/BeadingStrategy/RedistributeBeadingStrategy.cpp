@@ -11,6 +11,10 @@ namespace cura
     {
         Beading ret = parent->compute(thickness, bead_count);
 
+        // Actual count and thickness as represented by extant walls. Don't count any potential zero-width 'signalling' walls.
+        bead_count = std::count_if(ret.bead_widths.begin(), ret.bead_widths.end(), [](const coord_t width) { return width > 0; });
+        thickness -= ret.left_over;
+
         // Early out when the only walls are outer, the parent can have been trusted to handle it.
         if (bead_count < 3)
         {
@@ -30,11 +34,10 @@ namespace cura
                 {
                     ret.bead_widths.insert(std::next(ret.bead_widths.begin()), left_over);
                     ret.toolpath_locations.insert(std::next(ret.toolpath_locations.begin()), thickness / 2);
-                    ret.left_over = 0;
                 }
                 else
                 {
-                    ret.left_over = left_over;
+                    ret.left_over += left_over;
                 }
             }
             return ret;
@@ -94,7 +97,6 @@ namespace cura
             last_width = ret.bead_widths[i_location];
         }
 
-        ret.left_over = std::max(static_cast<coord_t>(0), thickness - (ret.toolpath_locations.back() + ret.bead_widths.back() / 2));
         return ret;
     }
 
